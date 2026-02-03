@@ -6,6 +6,13 @@
   },
   "routes": [
     {
+      "src": "/.*\\.(js|css|svg|png|jpg|jpeg|gif|ico|woff|woff2|eot|ttf)$",
+      "dest": "/$0",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000"
+      }
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html",
       "status": 200
