@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { User } from '../models/user.model';
+import { environment } from '../../environments/environment';
 
 export interface Session {
   id: number;
@@ -19,7 +20,7 @@ export interface Session {
 })
 export class AuthService {
   private readonly STORAGE_KEY = 'app_auth';
-  private readonly API_URL = 'http://localhost:3000/users';
+  private readonly API_URL = `${environment.apiUrl}/users`;
   private sessionSubject = new BehaviorSubject<Session | null>(this.loadSession());
   public session$ = this.sessionSubject.asObservable();
 
