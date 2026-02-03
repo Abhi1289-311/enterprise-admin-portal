@@ -1,0 +1,35 @@
+<div class="app-container">
+  <header class="app-header">
+    <div class="header-content">
+      <h1>Enterprise Admin Portal</h1>
+      <div class="user-section">
+        <span class="role-badge" [class.admin]="currentUser?.role === 'Admin'" [class.viewer]="currentUser?.role === 'Viewer'">
+          {{ currentUser?.role }}
+        </span>
+        <span class="username">{{ currentUser?.fullName }}</span>
+        <button class="btn btn-sm btn-outline-light" (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="app-body">
+    <aside class="sidebar">
+      <nav class="nav-menu">
+        <a routerLink="/app/dashboard" routerLinkActive="active" class="nav-item">
+          <span class="icon">📊</span> Dashboard
+        </a>
+        <a routerLink="/app/users" routerLinkActive="active" class="nav-item">
+          <span class="icon">👥</span> Users
+        </a>
+        <a routerLink="/app/bookings" routerLinkActive="active" class="nav-item">
+          <span class="icon">📅</span> Bookings
+        </a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
+

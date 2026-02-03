@@ -1,0 +1,66 @@
+<div class="detail-container">
+  <div class="detail-header">
+    <h2>User Details</h2>
+    <a routerLink="/app/users" class="btn btn-secondary">← Back to Users</a>
+  </div>
+
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+  <app-alert [message]="error" (closed)="error = ''" type="danger" *ngIf="error && !loading"></app-alert>
+
+  <div class="detail-card" *ngIf="user && !loading">
+    <div class="detail-grid">
+      <div class="detail-field">
+        <label>Full Name</label>
+        <div class="detail-value">{{ user.fullName }}</div>
+      </div>
+      <div class="detail-field">
+        <label>Email Address</label>
+        <div class="detail-value">
+          <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+        </div>
+      </div>
+      <div class="detail-field">
+        <label>Phone Number</label>
+        <div class="detail-value">{{ user.phone }}</div>
+      </div>
+      <div class="detail-field">
+        <label>User Role</label>
+        <div class="detail-value">
+          <span class="badge" [ngClass]="'badge-' + user.role.toLowerCase()">
+            {{ user.role }}
+          </span>
+        </div>
+      </div>
+      <div class="detail-field">
+        <label>Status</label>
+        <div class="detail-value">
+          <span class="status-badge" [ngClass]="'status-' + user.status.toLowerCase()">
+            {{ user.status }}
+          </span>
+        </div>
+      </div>
+      <div class="detail-field">
+        <label>Member Since</label>
+        <div class="detail-value">{{ user.createdAt | date: 'long' }}</div>
+      </div>
+      <div class="detail-field">
+        <label>Last Updated</label>
+        <div class="detail-value">{{ user.updatedAt | date: 'long' }}</div>
+      </div>
+      <div class="detail-field">
+        <label>Account ID</label>
+        <div class="detail-value">
+          <code>{{ user.id }}</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <a [routerLink]="['/app/users', user.id, 'edit']" class="btn btn-warning" *ngIf="currentUser?.role === 'Admin'">
+        ✎ Edit User
+      </a>
+    </div>
+  </div>
+</div>
+

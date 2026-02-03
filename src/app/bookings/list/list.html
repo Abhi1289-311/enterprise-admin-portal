@@ -1,0 +1,96 @@
+<div class="list-container">
+  <div class="list-header">
+    <h2>Bookings Management</h2>
+    <a routerLink="/app/bookings/new" class="btn btn-primary" *ngIf="currentUser?.role === 'Admin'">
+      <span>✚</span> Add New Booking
+    </a>
+  </div>
+
+  <div class="filters-section">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="form-control" placeholder="Search by booking code or customer name" (input)="onSearch($event)">
+    </div>
+    <div class="filter-controls">
+      <select class="form-select" (change)="onFilterStatus($event)">
+        <option value="">All Statuses</option>
+        <option value="Created">Created</option>
+        <option value="Confirmed">Confirmed</option>
+        <option value="Cancelled">Cancelled</option>
+        <option value="Completed">Completed</option>
+      </select>
+    </div>
+  </div>
+
+  <app-loading-spinner *ngIf="loadingSubject | async"></app-loading-spinner>
+
+  <app-alert *ngIf="errorSubject | async as error" [message]="error" (closed)="errorSubject.next('')" type="danger"></app-alert>
+
+  <div class="table-wrapper" *ngIf="paginatedBookings$ | async as bookings">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Booking Code</th>
+          <th>Customer Name</th>
+          <th>Route</th>
+          <th (click)="onSort('travelDate')" class="sortable">
+            <span>Travel Date</span>
+            <span class="sort-indicator" *ngIf="sortSubject.value.field === 'travelDate'">
+              {{ sortSubject.value.direction === 'asc' ? '↑' : '↓' }}
+            </span>
+          </th>
+          <th>Status</th>
+          <th (click)="onSort('createdAt')" class="sortable">
+            <span>Created</span>
+            <span class="sort-indicator" *ngIf="sortSubject.value.field === 'createdAt'">
+              {{ sortSubject.value.direction === 'asc' ? '↑' : '↓' }}
+            </span>
+          </th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let booking of bookings" [attr.data-status]="booking.bookingStatus">
+          <td><strong>{{ booking.bookingCode }}</strong></td>
+          <td>{{ booking.customerName }}</td>
+          <td>
+            <span class="route-badge">{{ booking.source }} → {{ booking.destination }}</span>
+          </td>
+          <td>{{ booking.travelDate | date: 'short' }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="'status-' + booking.bookingStatus.toLowerCase()">
+              {{ booking.bookingStatus }}
+            </span>
+          </td>
+          <td>{{ booking.createdAt | date: 'short' }}</td>
+          <td class="action-buttons">
+            <button (click)="viewBooking(booking.id)" class="btn btn-sm btn-info" title="View details">
+              👁️ View
+            </button>
+            <button (click)="editBooking(booking.id)" class="btn btn-sm btn-warning" *ngIf="currentUser?.role === 'Admin'" title="Edit booking">
+              ✎ Edit
+            </button>
+            <button (click)="onDelete(booking.id)" class="btn btn-sm btn-danger" *ngIf="currentUser?.role === 'Admin'" title="Delete booking">
+              🗑️ Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="no-data" *ngIf="(paginatedBookings$ | async)?.length === 0 && !(loadingSubject | async)">
+    <p>No bookings found. Try adjusting your search or filters.</p>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination-section" *ngIf="totalPages$ | async as totalPages">
+    <button class="btn btn-outline-primary" (click)="onPage((pageSubject.value - 1) || 1)" [disabled]="pageSubject.value === 1">
+      ← Previous
+    </button>
+    <span class="page-info">Page {{ pageSubject.value }} of {{ totalPages }}</span>
+    <button class="btn btn-outline-primary" (click)="onPage(pageSubject.value + 1)" [disabled]="pageSubject.value === totalPages">
+      Next →
+    </button>
+  </div>
+</div>

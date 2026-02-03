@@ -1,0 +1,73 @@
+<div class="detail-container">
+  <div class="detail-header">
+    <h2>Booking Details</h2>
+    <a routerLink="/app/bookings" class="btn btn-secondary">← Back to Bookings</a>
+  </div>
+
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+  <app-alert [message]="error" (closed)="error = ''" type="danger" *ngIf="error && !loading"></app-alert>
+
+  <div class="detail-card" *ngIf="booking && !loading">
+    <div class="detail-section">
+      <h3>Booking Information</h3>
+      <div class="detail-grid">
+        <div class="detail-field">
+          <label>Booking Code</label>
+          <div class="detail-value">
+            <strong>{{ booking.bookingCode }}</strong>
+          </div>
+        </div>
+        <div class="detail-field">
+          <label>Customer Name</label>
+          <div class="detail-value">{{ booking.customerName }}</div>
+        </div>
+        <div class="detail-field">
+          <label>Travel Route</label>
+          <div class="detail-value">
+            <span class="route-badge">{{ booking.source }} → {{ booking.destination }}</span>
+          </div>
+        </div>
+        <div class="detail-field">
+          <label>Travel Date</label>
+          <div class="detail-value">{{ booking.travelDate | date: 'long' }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <h3>Status & Dates</h3>
+      <div class="detail-grid">
+        <div class="detail-field">
+          <label>Booking Status</label>
+          <div class="detail-value">
+            <span class="status-badge" [ngClass]="'status-' + booking.bookingStatus.toLowerCase()">
+              {{ booking.bookingStatus }}
+            </span>
+          </div>
+        </div>
+        <div class="detail-field">
+          <label>Created On</label>
+          <div class="detail-value">{{ booking.createdAt | date: 'medium' }}</div>
+        </div>
+        <div class="detail-field">
+          <label>Last Updated</label>
+          <div class="detail-value">{{ booking.updatedAt | date: 'medium' }}</div>
+        </div>
+        <div class="detail-field">
+          <label>Booking ID</label>
+          <div class="detail-value">
+            <code>{{ booking.id }}</code>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <a [routerLink]="['/app/bookings', booking.id, 'edit']" class="btn btn-warning" *ngIf="currentUser?.role === 'Admin'">
+        ✎ Edit Booking
+      </a>
+    </div>
+  </div>
+</div>
+

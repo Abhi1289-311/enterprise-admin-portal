@@ -1,0 +1,114 @@
+<div class="list-container">
+  <div class="list-header">
+    <h2>Users Management</h2>
+    <a routerLink="/app/users/new" class="btn btn-primary" *ngIf="currentUser?.role === 'Admin'">
+      <span>✚</span> Add New User
+    </a>
+  </div>
+
+  <div class="filters-section">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="form-control" placeholder="Search by name, email, phone" (input)="onSearch($event)">
+    </div>
+    <div class="filter-controls">
+      <select class="form-select" (change)="onFilterRole($event)">
+        <option value="">All Roles</option>
+        <option value="Admin">Admin</option>
+        <option value="Viewer">Viewer</option>
+      </select>
+      <select class="form-select" (change)="onFilterStatus($event)">
+        <option value="">All Statuses</option>
+        <option value="Active">Active</option>
+        <option value="Inactive">Inactive</option>
+      </select>
+    </div>
+  </div>
+
+  <app-loading-spinner *ngIf="loadingSubject | async"></app-loading-spinner>
+
+  <app-alert *ngIf="errorSubject | async as error" [message]="error" (closed)="errorSubject.next('')" type="danger"></app-alert>
+
+  <div class="table-wrapper" *ngIf="paginatedUsers$ | async as users">
+    <table class="table">
+      <thead>
+        <tr>
+          <th (click)="onSort('fullName')" class="sortable">
+            <span>Name</span>
+            <span class="sort-indicator" *ngIf="sortSubject.value.field === 'fullName'">
+              {{ sortSubject.value.direction === 'asc' ? '↑' : '↓' }}
+            </span>
+          </th>
+          <th (click)="onSort('email')" class="sortable">
+            <span>Email</span>
+            <span class="sort-indicator" *ngIf="sortSubject.value.field === 'email'">
+              {{ sortSubject.value.direction === 'asc' ? '↑' : '↓' }}
+            </span>
+          </th>
+          <th (click)="onSort('role')" class="sortable">
+            <span>Role</span>
+            <span class="sort-indicator" *ngIf="sortSubject.value.field === 'role'">
+              {{ sortSubject.value.direction === 'asc' ? '↑' : '↓' }}
+            </span>
+          </th>
+          <th (click)="onSort('status')" class="sortable">
+            <span>Status</span>
+            <span class="sort-indicator" *ngIf="sortSubject.value.field === 'status'">
+              {{ sortSubject.value.direction === 'asc' ? '↑' : '↓' }}
+            </span>
+          </th>
+          <th (click)="onSort('createdAt')" class="sortable">
+            <span>Created</span>
+            <span class="sort-indicator" *ngIf="sortSubject.value.field === 'createdAt'">
+              {{ sortSubject.value.direction === 'asc' ? '↑' : '↓' }}
+            </span>
+          </th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users" [attr.data-status]="user.status">
+          <td><strong>{{ user.fullName }}</strong></td>
+          <td>{{ user.email }}</td>
+          <td>
+            <span class="badge" [ngClass]="'badge-' + user.role.toLowerCase()">
+              {{ user.role }}
+            </span>
+          </td>
+          <td>
+            <span class="status-badge" [ngClass]="'status-' + user.status.toLowerCase()">
+              {{ user.status }}
+            </span>
+          </td>
+          <td>{{ user.createdAt | date: 'short' }}</td>
+          <td class="action-buttons">
+            <button (click)="viewUser(user.id)" class="btn btn-sm btn-info" title="View details">
+              👁️ View
+            </button>
+            <button (click)="editUser(user.id)" class="btn btn-sm btn-warning" *ngIf="currentUser?.role === 'Admin'" title="Edit user">
+              ✎ Edit
+            </button>
+            <button (click)="onDelete(user.id)" class="btn btn-sm btn-danger" *ngIf="currentUser?.role === 'Admin'" title="Delete user">
+              🗑️ Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="no-data" *ngIf="(paginatedUsers$ | async)?.length === 0 && !(loadingSubject | async)">
+    <p>No users found. Try adjusting your search or filters.</p>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination-section" *ngIf="totalPages$ | async as totalPages">
+    <button class="btn btn-outline-primary" (click)="onPage((pageSubject.value - 1) || 1)" [disabled]="pageSubject.value === 1">
+      ← Previous
+    </button>
+    <span class="page-info">Page {{ pageSubject.value }} of {{ totalPages }}</span>
+    <button class="btn btn-outline-primary" (click)="onPage(pageSubject.value + 1)" [disabled]="pageSubject.value === totalPages">
+      Next →
+    </button>
+  </div>
+</div>

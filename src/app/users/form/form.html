@@ -1,0 +1,66 @@
+<div class="form-container">
+  <div class="form-header">
+    <h2>{{ isEdit ? '✎ Edit User' : '➕ Create New User' }}</h2>
+  </div>
+
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+  <app-alert [message]="error" (closed)="error = ''" type="danger" *ngIf="error"></app-alert>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!loading" class="form-card">
+    <div class="form-section">
+      <h3>Personal Information</h3>
+      
+      <div class="form-group">
+        <label for="fullName" class="form-label">Full Name *</label>
+        <input type="text" class="form-control" id="fullName" formControlName="fullName" placeholder="Enter full name">
+        <app-validation-error [control]="form.get('fullName')"></app-validation-error>
+      </div>
+
+      <div class="form-group">
+        <label for="email" class="form-label">Email Address *</label>
+        <input type="email" class="form-control" id="email" formControlName="email" placeholder="Enter email address">
+        <app-validation-error [control]="form.get('email')"></app-validation-error>
+      </div>
+
+      <div class="form-group">
+        <label for="phone" class="form-label">Phone Number *</label>
+        <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="Enter phone number">
+        <app-validation-error [control]="form.get('phone')"></app-validation-error>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Access Control</h3>
+      
+      <div class="form-group">
+        <label for="role" class="form-label">User Role *</label>
+        <select class="form-select" id="role" formControlName="role">
+          <option value="">Select a role</option>
+          <option value="Admin">Admin - Full Access</option>
+          <option value="Viewer">Viewer - Read Only</option>
+        </select>
+        <app-validation-error [control]="form.get('role')"></app-validation-error>
+      </div>
+
+      <div class="form-group">
+        <label for="status" class="form-label">Account Status *</label>
+        <select class="form-select" id="status" formControlName="status">
+          <option value="">Select a status</option>
+          <option value="Active">Active - Can login</option>
+          <option value="Inactive">Inactive - Login disabled</option>
+        </select>
+        <app-validation-error [control]="form.get('status')"></app-validation-error>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" [disabled]="!isModified || !form.valid">
+        <span>✓</span> {{ isEdit ? 'Update User' : 'Create User' }}
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">
+        <span>✕</span> Cancel
+      </button>
+    </div>
+  </form>
+</div>

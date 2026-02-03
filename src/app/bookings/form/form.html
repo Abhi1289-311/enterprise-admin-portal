@@ -1,0 +1,76 @@
+<div class="form-container">
+  <div class="form-header">
+    <h2>{{ isEdit ? '✎ Edit Booking' : '➕ Create New Booking' }}</h2>
+  </div>
+
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+  <app-alert [message]="error" (closed)="error = ''" type="danger" *ngIf="error"></app-alert>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!loading" class="form-card">
+    <div class="form-section">
+      <h3>Booking Information</h3>
+      
+      <div class="form-group">
+        <label for="bookingCode" class="form-label">Booking Code *</label>
+        <input type="text" class="form-control" id="bookingCode" formControlName="bookingCode" placeholder="e.g., BK-2025-001">
+        <app-validation-error [control]="form.get('bookingCode')"></app-validation-error>
+      </div>
+
+      <div class="form-group">
+        <label for="customerName" class="form-label">Customer Name *</label>
+        <input type="text" class="form-control" id="customerName" formControlName="customerName" placeholder="Enter customer name">
+        <app-validation-error [control]="form.get('customerName')"></app-validation-error>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="source" class="form-label">Source (From) *</label>
+          <input type="text" class="form-control" id="source" formControlName="source" placeholder="e.g., New York">
+          <app-validation-error [control]="form.get('source')"></app-validation-error>
+        </div>
+
+        <div class="form-group">
+          <label for="destination" class="form-label">Destination (To) *</label>
+          <input type="text" class="form-control" id="destination" formControlName="destination" placeholder="e.g., Los Angeles">
+          <app-validation-error [control]="form.get('destination')"></app-validation-error>
+          <div class="error-text" *ngIf="form.hasError('destinationEqualSource')">
+            ⚠️ Destination cannot be the same as source.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Travel & Status</h3>
+      
+      <div class="form-group">
+        <label for="travelDate" class="form-label">Travel Date *</label>
+        <input type="date" class="form-control" id="travelDate" formControlName="travelDate" [min]="today">
+        <small class="form-text">Must be today or in the future</small>
+        <app-validation-error [control]="form.get('travelDate')"></app-validation-error>
+      </div>
+
+      <div class="form-group">
+        <label for="bookingStatus" class="form-label">Booking Status *</label>
+        <select class="form-select" id="bookingStatus" formControlName="bookingStatus">
+          <option value="">Select a status</option>
+          <option value="Created">Created - New booking</option>
+          <option value="Confirmed">Confirmed - Confirmed</option>
+          <option value="Cancelled">Cancelled - Cancelled</option>
+          <option value="Completed">Completed - Completed</option>
+        </select>
+        <app-validation-error [control]="form.get('bookingStatus')"></app-validation-error>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" [disabled]="!isModified || !form.valid">
+        <span>✓</span> {{ isEdit ? 'Update Booking' : 'Create Booking' }}
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">
+        <span>✕</span> Cancel
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,14 @@
+<div class="alert alert-wrapper" [ngClass]="'alert-' + type" *ngIf="message">
+  <div class="alert-content">
+    <span class="alert-icon">
+      <ng-container [ngSwitch]="type">
+        <span *ngSwitchCase="'danger'">✕</span>
+        <span *ngSwitchCase="'success'">✓</span>
+        <span *ngSwitchCase="'warning'">⚠</span>
+        <span *ngSwitchDefault>ⓘ</span>
+      </ng-container>
+    </span>
+    <span class="alert-message">{{ message }}</span>
+  </div>
+  <button type="button" class="alert-close" (click)="close()" title="Dismiss">×</button>
+</div>
