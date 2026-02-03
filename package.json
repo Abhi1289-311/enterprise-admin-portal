@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
+    "start:ui": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:enterprise-admin-portal": "node dist/enterprise-admin-portal/server/server.mjs"
+    "test": "ng test"
   },
   "prettier": {
     "printWidth": 100,
@@ -33,6 +33,7 @@
     "@angular/ssr": "^20.3.6",
     "bootstrap": "^5.3.8",
     "express": "^5.1.0",
+    "json-server": "^1.0.0-beta.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
@@ -44,7 +45,6 @@
     "@types/jasmine": "~5.1.0",
     "@types/node": "^20.17.19",
     "jasmine-core": "~5.9.0",
-    "json-server": "^1.0.0-beta.5",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",

@@ -1,0 +1,138 @@
+{
+  "users": [
+    {
+      "fullName": "Abhilash Gandham",
+      "email": "abhi@123.com",
+      "phone": "9876543210",
+      "role": "Admin",
+      "status": "Active",
+      "updatedAt": "2026-02-03T17:16:21.534Z",
+      "id": "1"
+    },
+    {
+      "id": "2",
+      "fullName": "Jane Smith",
+      "email": "jane@example.com",
+      "phone": "9876543211",
+      "role": "Viewer",
+      "status": "Active",
+      "createdAt": "2026-02-03T10:05:00.000Z",
+      "updatedAt": "2026-02-03T10:05:00.000Z"
+    },
+    {
+      "id": "3",
+      "fullName": "John Doe",
+      "email": "john@example.com",
+      "phone": "9876543212",
+      "role": "Admin",
+      "status": "Active",
+      "createdAt": "2026-02-03T10:10:00.000Z",
+      "updatedAt": "2026-02-03T10:10:00.000Z"
+    },
+    {
+      "id": "4",
+      "fullName": "Alice Johnson",
+      "email": "alice@example.com",
+      "phone": "9876543213",
+      "role": "Viewer",
+      "status": "Inactive",
+      "createdAt": "2026-02-03T10:15:00.000Z",
+      "updatedAt": "2026-02-03T10:15:00.000Z"
+    },
+    {
+      "id": "5",
+      "fullName": "Bob Wilson",
+      "email": "bob@example.com",
+      "phone": "9876543214",
+      "role": "Admin",
+      "status": "Active",
+      "createdAt": "2026-02-03T10:20:00.000Z",
+      "updatedAt": "2026-02-03T10:20:00.000Z"
+    },
+    {
+      "id": "6",
+      "fullName": "Testing",
+      "email": "Test@test.com",
+      "phone": "9876543210",
+      "role": "Viewer",
+      "status": "Active"
+    },
+    {
+      "id": "c124",
+      "fullName": "New Test",
+      "email": "Test@new.co",
+      "phone": "9876432109",
+      "role": "Viewer",
+      "status": "Active",
+      "createdAt": "2026-02-03T17:12:07.916Z",
+      "updatedAt": "2026-02-03T17:12:07.916Z"
+    },
+    {
+      "id": "998002",
+      "fullName": "Full Name",
+      "email": "email@test.com",
+      "phone": "9876543210",
+      "role": "Viewer",
+      "status": "Active",
+      "createdAt": "2026-02-03T17:15:32.414Z",
+      "updatedAt": "2026-02-03T17:15:32.414Z"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "1",
+      "bookingCode": "BK001",
+      "customerName": "Abhilash Kumar",
+      "source": "New York",
+      "destination": "Los Angeles",
+      "travelDate": "2026-02-15",
+      "bookingStatus": "Confirmed",
+      "createdAt": "2026-02-03T10:00:00.000Z",
+      "updatedAt": "2026-02-03T10:00:00.000Z"
+    },
+    {
+      "id": "2",
+      "bookingCode": "BK002",
+      "customerName": "Jane Smith",
+      "source": "Chicago",
+      "destination": "Miami",
+      "travelDate": "2026-02-20",
+      "bookingStatus": "Created",
+      "createdAt": "2026-02-03T10:10:00.000Z",
+      "updatedAt": "2026-02-03T10:10:00.000Z"
+    },
+    {
+      "id": "3",
+      "bookingCode": "BK003",
+      "customerName": "John Doe",
+      "source": "San Francisco",
+      "destination": "Seattle",
+      "travelDate": "2026-02-25",
+      "bookingStatus": "Confirmed",
+      "createdAt": "2026-02-03T10:20:00.000Z",
+      "updatedAt": "2026-02-03T10:20:00.000Z"
+    },
+    {
+      "id": "4",
+      "bookingCode": "BK004",
+      "customerName": "Alice Johnson",
+      "source": "Boston",
+      "destination": "Denver",
+      "travelDate": "2026-03-01",
+      "bookingStatus": "Cancelled",
+      "createdAt": "2026-02-03T10:30:00.000Z",
+      "updatedAt": "2026-02-03T10:30:00.000Z"
+    },
+    {
+      "id": "5",
+      "bookingCode": "BK005",
+      "customerName": "Bob Wilson",
+      "source": "Portland",
+      "destination": "Las Vegas",
+      "travelDate": "2026-03-05",
+      "bookingStatus": "Completed",
+      "createdAt": "2026-02-03T10:40:00.000Z",
+      "updatedAt": "2026-02-03T10:40:00.000Z"
+    }
+  ]
+}

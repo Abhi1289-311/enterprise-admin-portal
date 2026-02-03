@@ -40,7 +40,7 @@ testem.log
 __screenshots__/
 
 # Database (development only)
-db.json
+#db.json
 
 # System files
 .DS_Store
